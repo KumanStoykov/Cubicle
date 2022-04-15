@@ -1,10 +1,13 @@
 const express = require('express');
+const path = require('path');
 
 const initHandlebars = require('./config/handlebars');
 
 const app = express();
 
 initHandlebars(app);
+
+app.use(express.static(path.resolve(__dirname, './static')));
 
 // require('./config/handlebars')(app); Shortcut variant ONLY for require!!!
 
