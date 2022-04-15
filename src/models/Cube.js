@@ -15,15 +15,22 @@ class Cube {
             description: "Lego rubik's cube, New design!",
             imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPe_oNEaJpxMEyNXOFOM9iGwRDMplO3aTcqA&usqp=CAU',
             difficulty: '2'
-          }
+        },
+        {
+            id: '8g19n63gl20k3gc3',
+            name: "Ice Cube",
+            description: "Lego rubik's cube, New design!",
+            imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbIQ0azDzpQkSwIelUgTzf-o3hd8zMISNktQ&usqp=CAU',
+            difficulty: '4'
+        },
     ]
 
     constructor(name, description, imageUrl, difficulty) {
         this.id = uniqid();
         this.name = name,
-        this.description = description,
-        this.imageUrl = imageUrl,
-        this.difficulty = difficulty        
+            this.description = description,
+            this.imageUrl = imageUrl,
+            this.difficulty = difficulty
     }
 
     static get cubes() {
