@@ -12,11 +12,11 @@ const renderCreateCube = (req, res) => {
 
 const createCube = (req, res) => {
 
-    let { name, description, imageUrl, difficult } = req.body;
+    let { name, description, imageUrl, difficulty } = req.body;
 
-    cubeService.create(name, description, imageUrl, difficult);
+    cubeService.create(name, description, imageUrl, difficulty);
 
-    res.redirect('/cube/create');
+    res.redirect('/');
 }
 
 router.get('/create', renderCreateCube);
