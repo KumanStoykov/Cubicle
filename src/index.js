@@ -1,17 +1,13 @@
 const express = require('express');
-const handlebars = require('express-handlebars');
-const path = require('path');
+
+const initHandlebars = require('./config/handlebars');
 
 const app = express();
 
-app.set('views', path.resolve('./src/views'));
+initHandlebars(app);
 
-const hbs = handlebars.create({
-    extname: 'hbs',
-});
+// require('./config/handlebars')(app); Shortcut variant ONLY for require!!!
 
-app.engine('hbs', hbs.engine);
-app.set('view engine', 'hbs');
 
 app.all('/', (req, res) => {
     
