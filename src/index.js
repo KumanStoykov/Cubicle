@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
+
 const router = require('./routes');
+const config = require('./config/config.json')[process.env.NODE_ENV || 'development'];
 
 const initHandlebars = require('./config/handlebars');
 
@@ -22,4 +24,4 @@ app.use(express.static(path.resolve(__dirname, './static')));
 //Activate router
 app.use(router);
 
-app.listen(3000, console.log.bind(console, 'Application is running on http://localhost:3000'));
+app.listen(config.PORT, console.log.bind(console, `Application is running on http://localhost:${config.PORT}`));
