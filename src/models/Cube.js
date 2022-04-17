@@ -28,9 +28,9 @@ class Cube {
     constructor(name, description, imageUrl, difficulty) {
         this.id = uniqid();
         this.name = name,
-            this.description = description,
-            this.imageUrl = imageUrl,
-            this.difficulty = difficulty
+        this.description = description,
+        this.imageUrl = imageUrl,
+        this.difficulty = difficulty
     }
 
     static get cubes() {
