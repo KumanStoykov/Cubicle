@@ -21,7 +21,7 @@ const createCube = (req, res) => {
 
 const cubeDetails = (req, res) => {
     let cube = cubeService.getOne(req.params.cubeId);
-    console.log(cube)
+
 
     res.render('details', { ...cube });
 };
