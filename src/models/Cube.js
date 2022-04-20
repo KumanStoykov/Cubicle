@@ -1,45 +1,33 @@
-const uniqid = require('uniqid');
+const mongoose = require('mongoose');
 
-class Cube {
-    static #cubes = [
-        {
-            id: 'aspikjfaspifhads',
-            name: "Rubik's Cube",
-            description: 'Very good',
-            imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpKuLo_qSSZiP6o2fG91JjPumcXbrQzpYOUT9jPYfZfDNToV0nIY3Cgs5_I126nfF8xpE&usqp=CAU',
-            difficulty: '3'
-        },
-        {
-            id: '8g06m63gl20k3gc5',
-            name: "Lego rubik's cube",
-            description: "Lego rubik's cube, New design!",
-            imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPe_oNEaJpxMEyNXOFOM9iGwRDMplO3aTcqA&usqp=CAU',
-            difficulty: '2'
-        },
-        {
-            id: '8g19n63gl20k3gc3',
-            name: "Ice Cube",
-            description: "Lego rubik's cube, New design!",
-            imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbIQ0azDzpQkSwIelUgTzf-o3hd8zMISNktQ&usqp=CAU',
-            difficulty: '4'
-        },
-    ]
-
-    constructor(name, description, imageUrl, difficulty) {
-        this.id = uniqid();
-        this.name = name,
-        this.description = description,
-        this.imageUrl = imageUrl,
-        this.difficulty = difficulty
+const cubeSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true,
+        maxlength: 100
+    },
+    imageUrl: {
+        type: String,
+        required: true,
+        //validate: /^https?:\/\//i
+        validate: {
+            validator: function(value) {
+                return /^https?:\/\//i.test(value);
+            },
+            message: 'Image Url is invalid'
+        }
+    },
+    difficultyLevel: {
+        type: Number,
+        required: true,
+        min: 1,
+        max: 6
     }
-
-    static get cubes() {
-        return Cube.#cubes.slice();
-    }
-
-    static add(cube) {
-        Cube.#cubes.push(cube);
-    }
-}
+});
+const Cube = mongoose.Schema('Cube', cubeSchema);
 
 module.exports = Cube;

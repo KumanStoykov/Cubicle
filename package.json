@@ -21,7 +21,7 @@
   "dependencies": {
     "express": "^4.17.3",
     "express-handlebars": "^6.0.5",
-    "uniqid": "^5.4.0"
+    "mongoose": "^6.3.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
