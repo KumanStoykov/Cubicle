@@ -2,7 +2,7 @@ const Cube = require('../models/Cube');
 
 const getAll = async () => await Cube.find({}).lean();
 
-const getOne = async (id) => await Cube.findById(id);
+const getOne = async (id) => await Cube.findById(id).lean();
 
 const create = async (name, description, imageUrl, difficulty) => {
     let cube = new Cube({
