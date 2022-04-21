@@ -3,7 +3,7 @@ const Accessory = require('../models/Accessory');
 
 const getAll = async () => await Cube.find({}).lean();
 
-const getOne = async (id) => await Cube.findById(id).lean();
+const getOne = async (id) => await Cube.findById(id).populate('accessories').lean();
 
 const create = async (name, description, imageUrl, difficulty) => {
     let cube = new Cube({
