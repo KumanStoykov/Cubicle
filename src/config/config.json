@@ -4,7 +4,7 @@
         "DB_CONNECTION_STRING": "mongodb://localhost:27017/cubes"
     },
     "production": {
-        "PORT": 80,
-        "DB_CONNECTION_STRING": ""
+        "PORT": 6001,
+        "DB_CONNECTION_STRING": "mongodb+srv://Rezor:uW7ZvsktVIKrFf6P@cluster0.me5kl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
     }
 }
