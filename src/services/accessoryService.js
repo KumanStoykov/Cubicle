@@ -9,7 +9,9 @@ async function getAll() {
 };
 
 async function getAllWithout(accessoryIds) {
-    // return Accessory.find({_id: {$nin: accessoryIds}}).lean();
+    //Native mongodb
+     return Accessory.find({_id: {$nin: accessoryIds}}).lean();
+    // With query
     return Accessory.find().where('_id').nin(accessoryIds).lean();
 }
 
