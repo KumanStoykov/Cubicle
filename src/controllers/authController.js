@@ -1,14 +1,22 @@
-const route = require('express').Router();
+const router = require('express').Router();
 
 
-route.get('/login', (req, res) => {
+router.get('/login', (req, res) => {
    res.render('auth/login'); 
 });
 
-route.post('/login', (req, res) => {
+router.post('/login', (req, res) => {
     
     res.redirect('/');
 });
 
+router.get('/register', (req, res) => {
+   res.render('auth/register'); 
+});
 
-module.exports = route;
+router.post('/register', (req, res) => {
+   res.redirect('/'); 
+});
+
+
+module.exports = router;
