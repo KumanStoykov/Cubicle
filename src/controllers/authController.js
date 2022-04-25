@@ -1,21 +1,25 @@
 const router = require('express').Router();
+const authService = require('../services/authService');
 
 
 router.get('/login', (req, res) => {
-   res.render('auth/login'); 
+    res.render('auth/login');
 });
 
 router.post('/login', (req, res) => {
-    
+
     res.redirect('/');
 });
 
 router.get('/register', (req, res) => {
-   res.render('auth/register'); 
+    res.render('auth/register');
 });
 
 router.post('/register', (req, res) => {
-   res.redirect('/'); 
+    let { username, password, repeatPassword } = req.body;
+
+    authService.register(username, password);
+        res.redirect('/');
 });
 
 
