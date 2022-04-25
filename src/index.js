@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const router = require('./routes');
 const config = require('./config/config.json')[process.env.NODE_ENV];
 const initDatabase = require('./config/database');
-const auth = require('./middlewares/authMiddleware');
+const authMiddleware = require('./middlewares/authMiddleware');
 
 
 
@@ -15,7 +15,7 @@ const app = express();
 //Body parser
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(auth);
+app.use(authMiddleware.auth);
 require('./config/handlebars')(app);
 
 // Load static files

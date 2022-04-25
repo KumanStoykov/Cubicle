@@ -18,5 +18,17 @@ function auth(req, res, next) {
     });
 }
 
+function isAuth(req, res, next)  {
 
-module.exports = auth;
+    if(!req.user) {
+        return res.status(401).redirect('/login');
+    }
+    next();
+}
+
+const authMiddleware = {
+    auth,
+    isAuth
+};
+
+module.exports = authMiddleware;
