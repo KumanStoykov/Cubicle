@@ -15,8 +15,9 @@ router.post('/login', async (req, res) => {
     if(!user) {
         return res.redirect('/404');
     }
-    
+
     let token = await authService.createToken(user);
+    console.log(token)
     res.redirect('/');
     
 });
