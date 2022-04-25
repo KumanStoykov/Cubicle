@@ -43,5 +43,11 @@ router.post('/register', async (req, res) => {
     }
 });
 
+router.get('/logout', (req, res) => {
+   res.clearCookie(TOKEN_COOKIE_NAME);
+   
+   res.redirect('/');
+});
+
 
 module.exports = router;
