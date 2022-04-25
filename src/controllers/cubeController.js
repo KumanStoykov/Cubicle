@@ -29,11 +29,22 @@ const cubeDetails = async (req, res) => {
     res.render('cube/details', { ...cube });
 };
 
+const renderEditCube = async (req, res) => {
+    let cube = await cubeService.getOne(req.params.cubeId);
+
+    res.render('cube/edit', { ...cube});
+};
+const renderDeleteCube = async (req, res) => {
+    let cube = await cubeService.getOne(req.params.cubeId);
+
+    res.render('cube/delete', { ...cube});
+};
+
 router.get('/create', renderCreateCube);
 router.post('/create', createCube);
 router.get('/:cubeId', cubeDetails);
-
-
 router.use('/:cubeId/accessory', cubeAccessoryController);
+router.get('/:cubeId/edit', renderEditCube);
+router.get('/:cubeId/delete', renderDeleteCube);
 
 module.exports = router;
