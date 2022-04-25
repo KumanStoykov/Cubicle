@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const router = require('./routes');
 const config = require('./config/config.json')[process.env.NODE_ENV];
 const initDatabase = require('./config/database');
-
+const auth = require('./middlewares/authMiddleware');
 
 
 
@@ -14,9 +14,8 @@ const app = express();
 
 //Body parser
 app.use(express.urlencoded({ extended: true }));
-
 app.use(cookieParser());
-
+app.use(auth);
 require('./config/handlebars')(app);
 
 // Load static files
@@ -31,4 +30,4 @@ initDatabase(config.DB_CONNECTION_STRING)
     })
     .catch(err => {
         console.log('Application init failed: ', err);
-    })
+    });
