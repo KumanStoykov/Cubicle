@@ -1,5 +1,5 @@
 const register = (username, password) => {
-    console.log(username, password);
+    
 };
 
 const authService = {
