@@ -1,5 +1,9 @@
 const User = require('../models/User');
-const bcrypt = require('bcrypt');
+// const jwt = require('jsonwebtoken');
+// const bcrypt = require('bcrypt');
+const utils = require('../utils/jwtUtils');
+const { SECRET } = require('../constants');
+
 
 
 const register = (username, password, repeatPassword) => {
@@ -13,18 +17,30 @@ const login = (username, password) => {
     return User.findByUsername(username)
         .then(user => Promise.all([user.validatePassword(password), user]))
         .then(([isValid, user]) => {
-            if(isValid) {
+            if (isValid) {
                 return user;
             } else {
-                 throw { message: 'Cannot find username or password'}
+                throw { message: 'Cannot find username or password' }
             }
         })
         .catch(() => null);
+};
+function createToken(user) {
+    let payload = {
+        _id: user._id,
+        username: user.username,
+    };
+
+    return utils.jwtSing(payload, SECRET)
+
 }
+
+
 
 const authService = {
     register,
-    login
+    login,
+    createToken
 };
 
 module.exports = authService;

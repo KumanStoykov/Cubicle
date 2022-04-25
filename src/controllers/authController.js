@@ -2,6 +2,7 @@ const router = require('express').Router();
 const authService = require('../services/authService');
 
 
+
 router.get('/login', (req, res) => {
     res.render('auth/login');
 });
@@ -11,12 +12,13 @@ router.post('/login', async (req, res) => {
 
     let user = await authService.login(username, password);
 
-    if(user) {
-        res.redirect('/');
-    } else {
-        res.redirect('/404');
+    if(!user) {
+        return res.redirect('/404');
     }
-
+    
+    let token = await authService.createToken(user);
+    res.redirect('/');
+    
 });
 
 router.get('/register', (req, res) => {
@@ -24,13 +26,13 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-    try{
+    try {
         let { username, password, repeatPassword } = req.body;
 
         await authService.register(username, password, repeatPassword);
-    
-        res.redirect('/login'); 
-    } catch(err) {
+        
+        res.redirect('/login');
+    } catch (err) {
         res.status(400).send(err.message);
     }
 });

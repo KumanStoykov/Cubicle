@@ -3,7 +3,7 @@ const path = require('path');
 const initDatabase = require('./config/database');
 
 const router = require('./routes');
-const config = require('./config/config.json')[process.env.NODE_ENV || 'development'];
+const config = require('./config/config.json')[process.env.NODE_ENV];
 
 const initHandlebars = require('./config/handlebars');
 
