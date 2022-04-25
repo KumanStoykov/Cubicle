@@ -15,10 +15,10 @@ const cubeSchema = new mongoose.Schema({
         required: true,
         //validate: [/^https?:\/\//i, 'Invalid image url']
         validate: {
-            validator: function(value) {
+            validator: function (value) {
                 return /^https?:\/\//i.test(value);
             },
-            message: (props) =>  `Image Url ${props.value} is invalid`
+            message: (props) => `Image Url ${props.value} is invalid`
         }
     },
     difficulty: {
@@ -32,11 +32,15 @@ const cubeSchema = new mongoose.Schema({
             type: mongoose.Types.ObjectId,
             ref: 'Accessory'
         }
-    ]
+    ],
+    owner: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
+    }
 });
 
-cubeSchema.statics.findByName = function(name) {
-    return this.find({name});
+cubeSchema.statics.findByName = function (name) {
+    return this.find({ name });
 };
 
 
