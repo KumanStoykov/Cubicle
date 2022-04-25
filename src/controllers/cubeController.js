@@ -3,6 +3,7 @@ const router = require('express').Router();
 const cubeService = require('../services/cubeServices');
 const cubeAccessoryController = require('./cubeAccessoryController');
 const authMiddleware = require('../middlewares/authMiddleware');
+const isOwner = require('../middlewares/cubeAuthMiddleware');
 
 
 const renderCreateCube = (req, res) => {
@@ -14,7 +15,7 @@ const createCube = async (req, res) => {
     let { name, description, imageUrl, difficulty } = req.body;
 
     try {
-        await cubeService.create(name, description, imageUrl, difficulty);
+        await cubeService.create(name, description, imageUrl, difficulty, req.user._id);
         res.redirect('/');
 
     } catch (err) {
@@ -36,12 +37,13 @@ const renderEditCube = async (req, res) => {
 };
 
 const editCube = async (req, res) => {
-    let cubeId = req.params.cubeId;  
+      
   let { name, description, imageUrl, difficulty } = req.body;
+ 
 
-  await cubeService.updateOne(cubeId, { name, description, imageUrl, difficulty });
+  await cubeService.updateOne({_id: req.params.cubeId}, { name, description, imageUrl, difficulty });
 
-  res.redirect(`/cube/${cubeId}`);
+  res.redirect(`/cube/${req.params.cubeId}`);
 };
 
 const renderDeleteCube = async (req, res) => {
@@ -59,10 +61,10 @@ const deleteCube = async (req, res) => {
 router.get('/create', authMiddleware.isAuth, renderCreateCube);
 router.post('/create', authMiddleware.isAuth, createCube);
 router.get('/:cubeId', cubeDetails);
-router.get('/:cubeId/edit', authMiddleware.isAuth, renderEditCube);
-router.post('/:cubeId/edit', authMiddleware.isAuth, editCube);
-router.get('/:cubeId/delete', authMiddleware.isAuth, renderDeleteCube);
-router.post('/:cubeId/delete', authMiddleware.isAuth, deleteCube);
+router.get('/:cubeId/edit', authMiddleware.isAuth, isOwner, renderEditCube);
+router.post('/:cubeId/edit', authMiddleware.isAuth, isOwner, editCube);
+router.get('/:cubeId/delete', authMiddleware.isAuth, isOwner, renderDeleteCube);
+router.post('/:cubeId/delete', authMiddleware.isAuth, isOwner, deleteCube);
 
 router.use('/:cubeId/accessory', cubeAccessoryController);
 
