@@ -5,12 +5,13 @@ const getAll = async () => await Cube.find({}).lean();
 
 const getOne = async (id) => await Cube.findById(id).populate('accessories').lean();
 
-const create = async (name, description, imageUrl, difficulty) => {
+const create = async (name, description, imageUrl, difficulty, userId) => {
     let cube = new Cube({
         name,
         description,
         imageUrl,
-        difficulty
+        difficulty,
+        owner: userId
     });
 
     return await cube.save();
@@ -43,7 +44,7 @@ const attachAccessory = async (cubeId, accessoryId) => {
 
 const deleteOne =  (cubeId) => Cube.findByIdAndDelete(cubeId);
 
-const updateOne = (cubeId, cube) => Cube.findOneAndUpdate(cubeId, cube, { runValidators: true });
+const updateOne = (cubeId, cube) => Cube.findOneAndUpdate(cubeId, cube, { new: true });
 
 
 const cubeService = {
