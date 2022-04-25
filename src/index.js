@@ -5,7 +5,7 @@ const initDatabase = require('./config/database');
 const router = require('./routes');
 const config = require('./config/config.json')[process.env.NODE_ENV];
 
-const initHandlebars = require('./config/handlebars');
+
 
 
 // Initial server
@@ -15,9 +15,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 
 
-initHandlebars(app);
-
-// require('./config/handlebars')(app); Shortcut variant ONLY for require!!!
+require('./config/handlebars')(app);
 
 // Load static files
 app.use(express.static(path.resolve(__dirname, './static')));
