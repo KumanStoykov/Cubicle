@@ -17,7 +17,11 @@ router.post('/login', async (req, res) => {
     }
 
     let token = await authService.createToken(user);
-    console.log(token)
+
+    res.cookie('app_token', token, {
+        httpOnly: true
+    });
+   
     res.redirect('/');
     
 });

@@ -1,9 +1,10 @@
 const express = require('express');
 const path = require('path');
-const initDatabase = require('./config/database');
+const cookieParser = require('cookie-parser');
 
 const router = require('./routes');
 const config = require('./config/config.json')[process.env.NODE_ENV];
+const initDatabase = require('./config/database');
 
 
 
@@ -14,6 +15,7 @@ const app = express();
 //Body parser
 app.use(express.urlencoded({ extended: true }));
 
+app.use(cookieParser());
 
 require('./config/handlebars')(app);
 
