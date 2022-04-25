@@ -11,7 +11,7 @@ const register = (username, password, repeatPassword) => {
 
 const login = (username, password) => {
     return User.findByUsername(username)
-        .then(user => Promise.all([bcrypt.compare(password, user.password), user]))
+        .then(user => Promise.all([user.validatePassword(password), user]))
         .then(([isValid, user]) => {
             if(isValid) {
                 return user;
@@ -19,6 +19,7 @@ const login = (username, password) => {
                  throw { message: 'Cannot find username or password'}
             }
         })
+        .catch(() => null);
 }
 
 const authService = {
