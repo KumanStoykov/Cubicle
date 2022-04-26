@@ -1,7 +1,7 @@
 const User = require('../models/User');
 // const jwt = require('jsonwebtoken');
 // const bcrypt = require('bcrypt');
-const utils = require('../utils/jwtUtils');
+const jwtUtils = require('../utils/jwtUtils');
 const { SECRET } = require('../constants');
 
 
@@ -31,7 +31,7 @@ function createToken(user) {
         username: user.username,
     };
 
-    return utils.jwtSing(payload, SECRET)
+    return jwtUtils(payload, SECRET)
 
 }
 

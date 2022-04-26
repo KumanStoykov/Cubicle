@@ -17,8 +17,6 @@ function jwtSing(payload, secret) {
      
 }
 
-const utils = {
-    jwtSing,    
-}
 
-module.exports = utils;
+
+module.exports = jwtSing;
