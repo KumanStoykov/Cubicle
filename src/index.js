@@ -1,11 +1,12 @@
 const express = require('express');
+const router = require('./routes');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 
-const router = require('./routes');
 const config = require('./config/config.json')[process.env.NODE_ENV];
 const initDatabase = require('./config/database');
 const authMiddleware = require('./middlewares/authMiddleware');
+const errorHandlerMiddleware = require('./middlewares/errorHandlerMiddleware');
 
 
 
@@ -20,9 +21,10 @@ require('./config/handlebars')(app);
 
 // Load static files
 app.use(express.static(path.resolve(__dirname, './static')));
-
 //Activate router
 app.use(router);
+//Global error handler
+app.use(errorHandlerMiddleware);
 
 initDatabase(config.DB_CONNECTION_STRING)
     .then(() => {
