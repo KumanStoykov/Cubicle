@@ -14,6 +14,8 @@ const createCube = async (req, res) => {
 
     let { name, description, imageUrl, difficulty } = req.body;
 
+     
+
     try {
         await cubeService.create(name, description, imageUrl, difficulty, req.user._id);
         res.redirect('/');

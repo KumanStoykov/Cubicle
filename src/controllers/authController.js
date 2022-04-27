@@ -13,7 +13,7 @@ router.post('/login', async (req, res) => {
 
     let user = await authService.login(username, password);
 
-    if(!user) {
+    if (!user) {
         return res.redirect('/404');
     }
 
@@ -22,31 +22,38 @@ router.post('/login', async (req, res) => {
     res.cookie(TOKEN_COOKIE_NAME, token, {
         httpOnly: true
     });
-   
+
     res.redirect('/');
-    
+
 });
 
 router.get('/register', (req, res) => {
     res.render('auth/register');
 });
 
-router.post('/register', async (req, res) => {
+router.post('/register', async (req, res, next) => {
+
     try {
         let { username, password, repeatPassword } = req.body;
 
+        if (password != repeatPassword) {
+            throw new Error(`Password don't match!`);
+        }
+
         await authService.register(username, password, repeatPassword);
-        
+
         res.redirect('/login');
     } catch (err) {
-        res.status(400).send(err.message);
+        res.status(400).render('auth/register', {error: err.message});
+        //Global error handler
+        // next(err.message);       
     }
 });
 
 router.get('/logout', (req, res) => {
-   res.clearCookie(TOKEN_COOKIE_NAME);
-   
-   res.redirect('/');
+    res.clearCookie(TOKEN_COOKIE_NAME);
+
+    res.redirect('/');
 });
 
 
