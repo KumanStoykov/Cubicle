@@ -12,28 +12,29 @@ const renderCreateCube = (req, res) => {
 
 const createCube = async (req, res) => {
 
-    let { name, description, imageUrl, difficulty } = req.body;
-
-     
+    let { name, description, imageUrl, difficulty } = req.body;     
 
     try {
         await cubeService.create(name, description, imageUrl, difficulty, req.user._id);
         res.redirect('/');
 
     } catch (err) {
-        res.status(400).send(err.message);
+        res.locals.error = err.message;
+        res.render('cube/create');
     }
 
 }
 
 const cubeDetails = async (req, res) => {
     let cube = await cubeService.getOne(req.params.cubeId);
+    
+    let isOwn = cube.owner == req.user?._id;    
 
-    res.render('cube/details', { ...cube });
+    res.render('cube/details', { ...cube, isOwn });
 };
 
-const renderEditCube = async (req, res) => {
-    let cube = await cubeService.getOne(req.params.cubeId);
+const renderEditCube =  (req, res) => {
+    let cube =  req.cube;
 
     res.render('cube/edit', { ...cube });
 };
@@ -48,8 +49,8 @@ const editCube = async (req, res) => {
   res.redirect(`/cube/${req.params.cubeId}`);
 };
 
-const renderDeleteCube = async (req, res) => {
-    let cube = await cubeService.getOne(req.params.cubeId);
+const renderDeleteCube = (req, res) => {
+    let cube = req.cube;
 
     res.render('cube/delete', { ...cube });
 };
